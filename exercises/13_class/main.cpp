@@ -15,14 +15,36 @@ class Fibonacci {
 public:
     // TODO: 实现构造器
     // Fibonacci()
-
-    // TODO: 实现正确的缓存优化斐波那契计算
+    Fibonacci() : cached(2) {
+        cache[0] = 0;
+        cache[1] = 1;
+    }
     size_t get(int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
+        // 简单的边界检查，防止索引越界
+        if (i < 0) {
+            // 自定义需求：这里也可以抛异常或返回其他值
+            return 0;
         }
+        if (i >= 16) {
+            // 这里也可以抛异常或进行其他处理
+            std::cerr << "Index " << i << " out of Fibonacci cache range [0,15]" << std::endl;
+            return 0;
+        }
+
+        // 如果已经计算过第 i 个斐波那契数，直接返回
+        if (i < cached) {
+            return cache[i];
+        }
+
+        // 否则，从已经缓存的数开始计算到 i
+        for (int j = cached; j <= i; ++j) {
+            cache[j] = cache[j - 1] + cache[j - 2];
+        }
+        cached = i + 1; // 更新已缓存到的位置
+        
         return cache[i];
     }
+
 };
 
 int main(int argc, char **argv) {

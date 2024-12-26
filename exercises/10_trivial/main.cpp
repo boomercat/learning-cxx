@@ -5,15 +5,28 @@
 struct FibonacciCache {
     unsigned long long cache[16];
     int cached;
+
+    FibonacciCache() : cached(2) {
+        // 初始化缓存的前两个斐波那契数
+        cache[0] = 0;
+        cache[1] = 1;
+    }
 };
 
-// TODO: 实现正确的缓存优化斐波那契计算
-static unsigned long long fibonacci(FibonacciCache &cache, int i) {
-    for (; false; ++cached) {
-        cache[cached] = cache[cached - 1] + cache[cached - 2];
+// 计算斐波那契数并进行缓存优化
+static unsigned long long fibonacci(FibonacciCache &fibCache, int i) {
+    if (i < fibCache.cached) {
+        // 如果已经缓存了结果，直接返回
+        return fibCache.cache[i];
     }
-    return cache.cache[i];
+    // 如果结果没有缓存，就从已缓存的值开始计算
+    for (int j = fibCache.cached; j <= i; ++j) {
+        fibCache.cache[j] = fibCache.cache[j - 1] + fibCache.cache[j - 2];
+    }
+    fibCache.cached = i + 1; // 更新缓存的最大索引
+    return fibCache.cache[i];
 }
+
 
 int main(int argc, char **argv) {
     // TODO: 初始化缓存结构体，使计算正确
