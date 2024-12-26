@@ -16,6 +16,7 @@ class DynFibonacci {
 public:
     // TODO: 实现动态设置容量的构造器
     DynFibonacci(int capacity): cache(new ?), cached(?) {}
+    int a = 1;
 
     // TODO: 实现移动构造器
     DynFibonacci(DynFibonacci &&) noexcept = delete;
