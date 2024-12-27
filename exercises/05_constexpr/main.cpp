@@ -1,26 +1,29 @@
 #include "../exercise.h"
 
+#include <iostream>
+
+
+
 constexpr unsigned long long fibonacci(int i) {
     switch (i) {
-        case 0:
-            return 0;
-        case 1:
-            return 1;
-        default:
-            return fibonacci(i - 1) + fibonacci(i - 2);
+        case 0: return 0ULL;
+        case 1: return 1ULL;
+        default: return fibonacci(i - 1) + fibonacci(i - 2);
     }
 }
 
-int main(int argc, char **argv) {
+int main() {
+    // 1. 测试 Fibonacci(20)
     constexpr auto FIB20 = fibonacci(20);
     ASSERT(FIB20 == 6765, "fibonacci(20) should be 6765");
     std::cout << "fibonacci(20) = " << FIB20 << std::endl;
 
-    // TODO: 观察错误信息，修改一处，使代码编译运行
-    // PS: 编译运行，但是不一定能算出结果……
-    const auto ANS_N = 90;  // 由 constexpr 修改为 const
-    constexpr auto ANS = fibonacci(ANS_N);
+    // 2. 计算 Fibonacci(90)
+    //    因为 ANS_N 是 const，而不是 constexpr，
+    //    所以不能在编译期使用它来展开 fibonacci
+    const auto ANS_N = 90;  
+    // ↓ 关键改动：去掉了 constexpr
+    auto ANS = fibonacci(ANS_N);
     std::cout << "fibonacci(" << ANS_N << ") = " << ANS << std::endl;
-
     return 0;
 }
