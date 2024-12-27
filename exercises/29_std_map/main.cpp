@@ -6,12 +6,14 @@
 
 template<class k, class v>
 bool key_exists(std::map<k, v> const &map, k const &key) {
-    // TODO: 实现函数
+    // 判断键是否存在：使用 map.find()
+    return map.find(key) != map.end();
 }
 
 template<class k, class v>
 void set(std::map<k, v> &map, k key, v value) {
-    // TODO: 实现函数
+    // 插入或更新键值对：使用 map[key] = value
+    map[key] = value;
 }
 
 // ---- 不要修改以下代码 ----
@@ -33,5 +35,6 @@ int main(int argc, char **argv) {
     set(secrets, "hello"s, "developer"s);
     ASSERT(secrets["hello"] == "developer", "hello -> developer");
 
+    std::cout << "All tests passed!" << std::endl;
     return 0;
 }
